@@ -1,8 +1,8 @@
 A sample project that demonstrates a simple way, how to spawn a Web Worker and execute a function in it from the main thread using async/await syntax
 
 Example:
-'''
 
+```
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,4 +58,4 @@ Example:
 
 </body>
 </html>
-'''
+```
