@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 authors = ["YuriyRum<rumyua@gmail.com>"]
-description = "Makes it easier to use a Web Worker"
+description = "Makes it easier to use a WebWorker"
 readme = "README.md"
 homepage="https://github.com/YuriyRum/rs_simple_webworker"
 repository = "https://github.com/YuriyRum/rs_simple_webworker"
