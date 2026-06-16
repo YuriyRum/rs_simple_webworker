@@ -210,7 +210,7 @@ impl WorkerPool {
         let Some(worker_option) = self.workers.get_mut(index) else {
             return Promise::reject(&JsValue::from_str("Worker index out of bounds"));
         };
-        let Some(mut worker) = worker_option.as_mut() else {
+        let Some(worker) = worker_option.as_mut() else {
             let worker = Worker::new();
             self.workers.insert(index, Some(worker));
             return self.workers.get(index).unwrap().as_ref().unwrap().exec(

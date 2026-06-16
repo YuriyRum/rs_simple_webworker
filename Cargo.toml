@@ -3,11 +3,19 @@ name = "rs_simple_webworker"
 version = "0.1.0"
 edition = "2021"
 
+authors = ["YuriyRum<rumyua@gmail.com>"]
+description = "Makes it easier to use a Web Worker"
+readme = "README.md"
+homepage="https://github.com/YuriyRum/rs_simple_webworker"
+repository = "https://github.com/YuriyRum/rs_simple_webworker"
+license = "MIT"
+keywords = ["web", "wasm", "Web Worker"]
+exclude = ["/target", ".*"]
+
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
-
 wasm-bindgen = "0.2"
 
 wasm-bindgen-futures = "0.4"
