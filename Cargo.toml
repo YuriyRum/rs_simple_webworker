@@ -9,7 +9,7 @@ readme = "README.md"
 homepage="https://github.com/YuriyRum/rs_simple_webworker"
 repository = "https://github.com/YuriyRum/rs_simple_webworker"
 license = "MIT"
-keywords = ["web", "wasm", "Web Worker"]
+keywords = ["web", "wasm", "WebWorker"]
 exclude = ["/target", ".*"]
 
 [lib]
