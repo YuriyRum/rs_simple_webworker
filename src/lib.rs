@@ -170,7 +170,6 @@ pub struct WorkerPool {
 #[wasm_bindgen]
 impl WorkerPool {
     /// Creates a new worker pool with the specified number of workers.
-    /// Number of workers cannot be extended after the pool is created (that's in TODO list), but workers can be destroyed and recreated.
     pub fn new(number_of_workers: usize) -> Self {
         console_error_panic_hook::set_once();
         let mut workers = Vec::with_capacity(number_of_workers);
@@ -223,5 +222,30 @@ impl WorkerPool {
         };
         worker.refresh_onmessage();
         worker.exec(fun_name, func, args, deps, global_state)
+    }
+
+    /// Returns actual size of the pool
+    pub fn get_pool_size(&self) -> usize {
+        self.workers.len()
+    }
+
+    /// Returns the number of active workers in the pool.
+    pub fn get_number_of_active_workers(&self) -> usize {
+        self.workers.iter().filter(|w| w.is_some()).count()
+    }
+
+    /// Returns the index of the first free worker in the pool, or None if all workers are busy.
+    pub fn get_free_worker_index(&self) -> Option<usize> {
+        self.workers.iter().position(|w| w.is_none())
+    }
+
+    /// Returns the index of the first free worker in the pool, or creates a new worker if all workers are busy.
+    pub fn get_or_add_free_worker_index(&mut self) -> usize {
+        if let Some(index) = self.get_free_worker_index() {
+            return index;
+        }
+        let new_index = self.workers.len();
+        self.workers.push(None);
+        new_index
     }
 }

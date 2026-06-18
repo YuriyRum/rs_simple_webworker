@@ -1,5 +1,10 @@
 A sample project that demonstrates a simple way, how to spawn a Web Worker and execute a function in it from the main thread using async/await syntax
 
+Changes in the version 0.1.2:
+
+- new methods were added to the WorkerPool to simplify process of getting a free worker from the pool (please, check the documentation)
+- example was updated
+
 Example:
 
 ```
@@ -23,9 +28,9 @@ Example:
     const text = 'some test value';
 
     const pool = WorkerPool.new(10);
-
+    const workerIndex = pool.get_or_add_free_worker_index();
     try {
-        const result = await pool.get_worker_and_execute(0, "test", function test(text) {
+        const result = await pool.get_worker_and_execute(workerIndex, "test", function test(text) {
             globalThis.globalState.count++;
             return `Worker response: ${moment().format()} ${globalThis.globalState.count}`;
         }, [text], ["https://momentjs.com/downloads/moment.js"], { count: 0 });
@@ -35,23 +40,28 @@ Example:
     }
 
     try {
-        const result2 = await pool.get_worker_and_execute(0, "test", function test(text) {
+        const result2 = await pool.get_worker_and_execute(workerIndex, "test", function test(text) {
             globalThis.globalState.count++;
         return `Worker2 repsponse: ${globalThis.globalState.count}`;
         }, [text], ["https://momentjs.com/downloads/moment.js"], { count: 0 });
         console.log('result2 is', result2);
     } catch (e) {
         console.error('Error in worker execution:', e);
+    } finally {
+        pool.destroy_all_workers();
     }
 
+    const workerIndex3 = pool.get_or_add_free_worker_index();
     try {
-        const result3 = await pool.get_worker_and_execute(3, "test3", function test3(text) {
+        const result3 = await pool.get_worker_and_execute(workerIndex3, "test3", function test3(text) {
             globalThis.globalState.count++;
         return `Worker3 response: ${globalThis.globalState.count}`;
         }, [text], ["https://momentjs.com/downloads/moment.js"], { count: 0 });
         console.log('result3 is', result3);
     } catch (e) {
         console.error('Error in worker execution:', e);
+    } finally {
+        pool.destroy_worker(workerIndex3);
     }
 
 </script>
